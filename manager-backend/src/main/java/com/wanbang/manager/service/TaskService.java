@@ -22,7 +22,7 @@ public class TaskService extends ServiceImpl<DriverInfoMapper, DriverInfo> {
     /*
     * Cron 表达式基本语法
     * Spring 的 Cron 表达式由 6个字段 组成（从左到右），用空格分隔，表示时间的各个维度：
-    * 秒 分 时 日(月) 月 日(周)
+    * 秒 分 时 日(月) 月 日(周)   ！！日(月)和日(周) 冲突
     * 秒 (Seconds)：0-59
     * 分 (Minutes)：0-59
     * 时 (Hours)：0-23
@@ -61,8 +61,14 @@ public class TaskService extends ServiceImpl<DriverInfoMapper, DriverInfo> {
     * #（井号）：
     * 用于“日(周)”字段，表示第几周的星期几。
     * 示例：0 0 0 * * 2#1 表示每月第一个星期一执行。
+    * # 前面的值是星期几（例如 2 表示星期一，MON 也可以）。
+    * # 后面的值是第几周（例如 1 表示第1周，2 表示第2周）。
     *
+    * 0 0 9 * * MON-FRI
+    * 每周一到周五 上午9点执行
     *
+    * 0 0 9 * 2 MON-FRI
+    * 每年 2月的周一到周五 上午9点执行
     * */
     @Resource
     private DriverInfoService driverInfoService;
