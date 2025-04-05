@@ -12,6 +12,7 @@ import io.seata.spring.annotation.GlobalTransactional;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -52,7 +53,7 @@ public class DriverInfoServiceImpl extends ServiceImpl<DriverInfoMapper, DriverI
     @Override
     public void resetDriverMoney(Long id) {
         DriverInfo driverInfo = driverInfoMapper.selectById(id);
-        driverInfo.setMoney(0);
+        driverInfo.setMoney(BigDecimal.valueOf(0));
         driverInfoMapper.updateById(driverInfo);
     }
 

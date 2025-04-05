@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -53,7 +54,7 @@ public class DriverInfo {
     /**
      * 总金额
      */
-    private Integer money;
+    private BigDecimal money;
 
     /**
      * 创建时间
