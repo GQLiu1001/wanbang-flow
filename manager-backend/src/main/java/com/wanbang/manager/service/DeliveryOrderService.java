@@ -13,7 +13,7 @@ import com.wanbang.manager.resp.OrderDeliveryStatusResp;
 */
 public interface DeliveryOrderService extends IService<DeliveryOrder> {
 
-    IPage<DeliveryOrder> getPendingDeliveryOrders(int page, int size, String orderNo);
+
 
     void postDispatchOrder(DeliveryOrderReq deliveryOrderReq);
 
@@ -22,4 +22,6 @@ public interface DeliveryOrderService extends IService<DeliveryOrder> {
     void updateDispatchStatus(Long id, Integer status, Long driverId);
 
     void cancelDispatch(Long id, Long operatorId);
+
+    IPage<DeliveryOrder> getPendingDeliveryOrders(int page, int size, String orderNo, String startStr, String endStr, String customerPhone);
 }

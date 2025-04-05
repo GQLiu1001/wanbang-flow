@@ -22,6 +22,11 @@
         id,order_no,customer_phone,operator_id,order_remark,total_amount,
         adjusted_amount,aftersale_status,order_create_time,order_update_time
     </sql>
+    <update id="driverCancelOrder">
+        UPDATE wanbang_db.order_info
+        SET dispatch_status = 0
+        where order_no = #{orderNo}
+    </update>
 
     <select id="TopSales" resultType="com.wanbang.console.resp.TopSoldItemsResp">
         select
@@ -80,5 +85,7 @@
         </if>
         GROUP BY
         info.id
+        ORDER BY
+        info.id DESC
     </select>
 </mapper>

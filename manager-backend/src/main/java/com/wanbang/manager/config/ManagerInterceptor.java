@@ -23,10 +23,13 @@ public class ManagerInterceptor implements HandlerInterceptor {
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             // 提取 token
             String token = authHeader.substring("Bearer ".length()).trim();
-            String userId =(String) stringRedisTemplate.opsForValue().get("satoken:login:" + token);
-            if (userId != null && !userId.isEmpty()) {
+            System.out.println(token);
+            String userId = stringRedisTemplate.opsForValue().get("satoken:login:token:" + token);
+            System.out.println(userId);
+            if (userId != null ) {
                 // 将用户 ID 存入 ThreadLocal
                 UserContextHolder.setUserId(userId);
+                System.out.println("manager 存入userId:" + userId);
                 return true; // 验证通过，继续处理请求
             } else {
                 System.out.println("用户不存在");

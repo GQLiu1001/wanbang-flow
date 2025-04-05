@@ -153,11 +153,7 @@ public class DeliveryOrderServiceImpl extends ServiceImpl<DeliveryOrderMapper, D
         LambdaUpdateWrapper<DeliveryOrder> wrapper = new LambdaUpdateWrapper<>();
         wrapper.eq(DeliveryOrder::getId, orderId);
         wrapper.set(DeliveryOrder::getDeliveryStatus, 5);
-        deliveryOrderMapper.update(null, wrapper);
-//        LambdaUpdateWrapper<OrderInfo> wrapper1 = new LambdaUpdateWrapper<>();
-//        wrapper1.eq(OrderInfo::getOrderNo, orderNo);
-//        wrapper1.set(OrderInfo::getDispatchStatus, 0);
-//        orderInfoMapper.update(null,wrapper1);
+        orderInfoMapper.driverCancelOrder(orderNo);
     }
 
     @Override

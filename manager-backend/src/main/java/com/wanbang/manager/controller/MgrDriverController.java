@@ -4,9 +4,11 @@ package com.wanbang.manager.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.wanbang.manager.common.DriverInfo;
 import com.wanbang.manager.common.Result;
+import com.wanbang.manager.common.SysUserRole;
 import com.wanbang.manager.resp.DriverListResp;
 import com.wanbang.manager.service.DriverInfoService;
 import com.wanbang.manager.service.SysUserRoleService;
+import com.wanbang.manager.util.UserContextHolder;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
@@ -69,10 +71,11 @@ public class MgrDriverController {
 
     @Operation(summary = "删除司机")
     @DeleteMapping("/{id}/delete")
-    public Result deleteDriver(@PathVariable Long id ,@RequestParam("auditor") String auditor){
+    public Result deleteDriver(@PathVariable Long id ,@RequestParam(value = "auditor",required = false) String auditor){
         boolean userRole = getUserRole();
-        if (!userRole) {
-            return Result.fail();
+        System.out.println(userRole);
+        if (userRole == false){
+            return Result.fail("无权限");
         }
         driverInfoService.removeById(id);
         return Result.success();
@@ -90,10 +93,10 @@ public class MgrDriverController {
     }
 
     public boolean getUserRole(){
-//        String userId = UserContextHolder.getUserId();
-//        SysUserRole byId = sysUserRoleService.getById(Long.valueOf(userId));
-//        return byId.getRoleId() == 1;
-        return true;
+        String userId = UserContextHolder.getUserId();
+        SysUserRole byId = sysUserRoleService.getById(Long.valueOf(userId));
+        return byId.getRoleId() == 1;
+//        return true;
     }
 }
 

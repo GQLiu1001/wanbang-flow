@@ -34,6 +34,8 @@
         <if test="startStr == null and endStr != null">
             AND update_time &lt;= #{endStr}
         </if>
+        order by
+        inventory_log.id DESC
     </select>
 
 </mapper>

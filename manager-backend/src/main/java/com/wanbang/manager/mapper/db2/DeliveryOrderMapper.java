@@ -11,8 +11,9 @@ import com.wanbang.manager.common.DeliveryOrder;
 * @Entity com.wanbang.manager.common.DeliveryOrder
 */
 public interface DeliveryOrderMapper extends BaseMapper<DeliveryOrder> {
-    IPage<DeliveryOrder> getPendingDeliveryOrders(IPage<DeliveryOrder> orderPage, String orderNo);
 
+
+    IPage<DeliveryOrder> getPendingDeliveryOrders(IPage<DeliveryOrder> orderPage, String orderNo, String customerPhone, String startStr, String endStr);
 }
 
 

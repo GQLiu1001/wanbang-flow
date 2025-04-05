@@ -1,5 +1,6 @@
 package com.wanbang.console.mapper;
 
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.wanbang.console.common.OrderInfo;
@@ -27,6 +28,8 @@ public interface OrderInfoMapper extends BaseMapper<OrderInfo> {
     TotalSaleAmountResp getTotalSaleAmount();
 
     IPage<OrderInfoDTO> getOrderList(IPage<OrderInfoDTO> pageParam, String startStr, String endStr, String customerPhone);
+
+    void driverCancelOrder(String orderNo);
 }
 
 

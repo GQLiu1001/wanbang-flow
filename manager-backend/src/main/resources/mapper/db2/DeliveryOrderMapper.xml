@@ -29,6 +29,18 @@
         <if test="orderNo!=null">
             and order_no = #{orderNo}
         </if>
+        <if test="customerPhone != null">
+            and customer_phone = #{customerPhone}
+        </if>
+        <if test="startStr != null and endStr != null">
+            AND update_time BETWEEN #{startStr} AND #{endStr}
+        </if>
+        <if test="startStr == null and endStr != null">
+            AND update_time &lt; #{endStr}
+        </if>
+        <if test="startStr != null and endStr == null">
+            AND update_time &gt; #{startStr}
+        </if>
         order by
             update_time DESC
     </select>

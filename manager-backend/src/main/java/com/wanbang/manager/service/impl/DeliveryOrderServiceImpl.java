@@ -36,9 +36,10 @@ public class DeliveryOrderServiceImpl extends ServiceImpl<DeliveryOrderMapper, D
     private static final String ORDER_KEY = "delivery:orders"; // Redis 列表键
 
     @Override
-    public IPage<DeliveryOrder> getPendingDeliveryOrders(int page, int size, String orderNo) {
+    public IPage<DeliveryOrder> getPendingDeliveryOrders(int page, int size, String orderNo, String startStr, String endStr, String customerPhone) {
+
         IPage<DeliveryOrder> orderPage = new Page<>(page, size);
-        return  deliveryOrderMapper.getPendingDeliveryOrders(orderPage,orderNo);
+        return  deliveryOrderMapper.getPendingDeliveryOrders(orderPage,orderNo,customerPhone,startStr,endStr);
     }
 
     @Override

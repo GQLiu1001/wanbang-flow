@@ -24,9 +24,23 @@ public class MgrOrderController {
     @GetMapping
     public Result<DeliveryOrderResp> getPendingDeliveryOrders(@RequestParam(value = "page",defaultValue = "1") int page ,
                                                   @RequestParam(value = "size",defaultValue = "10") int size ,
-                                                  @RequestParam(value = "orderNo",required = false) String orderNo) {
+                                                  @RequestParam(value = "orderNo",required = false) String orderNo,
+                                                  @RequestParam(value = "customerPhone",required = false)String customerPhone,
+                                                  @RequestParam(value = "startTime", required = false) String startTime,
+                                                  @RequestParam(value = "endTime", required = false) String endTime) {
+        String startStr = null;
+        String endStr = null;
+        if (startTime != null) {
 
-        IPage<DeliveryOrder> resp = deliveryOrderService.getPendingDeliveryOrders(page,size,orderNo);
+            startStr = startTime.substring(0, 10);
+            System.out.println("startStr = " + startStr);
+        }
+        if (endTime != null) {
+
+            endStr = endTime.substring(0, 10);
+            System.out.println("endStr = " + endStr);
+        }
+        IPage<DeliveryOrder> resp = deliveryOrderService.getPendingDeliveryOrders(page,size,orderNo, startStr, endStr,customerPhone);
         DeliveryOrderResp deliveryOrderResp = new DeliveryOrderResp();
         deliveryOrderResp.setTotal(resp.getTotal());
         deliveryOrderResp.setRecords(resp.getRecords());
