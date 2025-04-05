@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wanbang.driver.common.Result;
 import com.wanbang.driver.resp.RouteResp;
-import com.wanbang.manager.util.UserContextHolder;
+import com.wanbang.driver.util.UserContextHolder;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
@@ -44,6 +44,7 @@ public class DeliveryMapController {
             @RequestParam("fromLng") BigDecimal fromLng,
             @RequestParam("toLat") BigDecimal toLat,
             @RequestParam("toLng") BigDecimal toLng) {
+        System.out.println("当前线程: " + Thread.currentThread().getName());
         System.out.println("司机"+ UserContextHolder.getUserId()+"触发腾讯地图路线规划");
         System.out.println("去向 = " + "toLat" + toLat + ",toLng" + toLng);
         // 校验经纬度范围

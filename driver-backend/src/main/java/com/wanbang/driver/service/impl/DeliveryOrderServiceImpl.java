@@ -16,7 +16,7 @@ import com.wanbang.driver.mapper.DriverInfoMapper;
 import com.wanbang.driver.service.DeliveryOrderService;
 
 import com.wanbang.manager.req.DeliveryOrderReq;
-import com.wanbang.manager.util.UserContextHolder;
+import com.wanbang.driver.util.UserContextHolder;
 import io.seata.spring.annotation.GlobalLock;
 import io.seata.spring.annotation.GlobalTransactional;
 import jakarta.annotation.Resource;
@@ -72,6 +72,7 @@ public class DeliveryOrderServiceImpl extends ServiceImpl<DeliveryOrderMapper, D
     @Transactional(rollbackFor = Exception.class)
     @Override
     public Boolean robNewOrder(Long driverId, String orderNo) {
+        System.out.println("当前线程: " + Thread.currentThread().getName());
         if (driverId == null || orderNo == null || orderNo.isEmpty()) {
             throw new IllegalArgumentException("driverId 或 orderNo 不能为空");
         }
@@ -91,7 +92,7 @@ public class DeliveryOrderServiceImpl extends ServiceImpl<DeliveryOrderMapper, D
             queryWrapper.eq(DeliveryOrder::getOrderNo, orderNo);
             queryWrapper.eq(DeliveryOrder::getDeliveryStatus, 2);
             DeliveryOrder order = deliveryOrderMapper.selectOne(queryWrapper);
-            System.out.println("司机触发方法 司机ID"+ driverId);
+            System.out.println("司机触发方法司机抢单 司机ID"+ UserContextHolder.getUserId());
             // 检查订单是否存在且可抢
             if (order == null || order.getDeliveryStatus() != 2) {
                 return false; // 订单不存在或已被抢
