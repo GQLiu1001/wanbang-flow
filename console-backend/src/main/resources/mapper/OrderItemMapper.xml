@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wanbang.console.mapper.OrderItemMapper">
+
+    <resultMap id="BaseResultMap" type="com.wanbang.console.common.OrderItem">
+            <id property="id" column="id" />
+            <result property="orderId" column="order_id" />
+            <result property="itemId" column="item_id" />
+            <result property="modelNumber" column="model_number" />
+            <result property="quantity" column="quantity" />
+            <result property="pricePerPiece" column="price_per_piece" />
+            <result property="subtotal" column="subtotal" />
+            <result property="adjustedQuantity" column="adjusted_quantity" />
+            <result property="createTime" column="create_time" />
+            <result property="updateTime" column="update_time" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,order_id,item_id,model_number,quantity,price_per_piece,
+        subtotal,adjusted_quantity,create_time,update_time
+    </sql>
+</mapper>

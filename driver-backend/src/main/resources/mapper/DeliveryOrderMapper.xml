@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wanbang.driver.mapper.DeliveryOrderMapper">
+
+    <resultMap id="BaseResultMap" type="com.wanbang.driver.common.DeliveryOrder">
+            <id property="id" column="id" />
+            <result property="orderNo" column="order_no" />
+            <result property="driverId" column="driver_id" />
+            <result property="customerPhone" column="customer_phone" />
+            <result property="deliveryAddress" column="delivery_address" />
+            <result property="deliveryStatus" column="delivery_status" />
+            <result property="deliveryFee" column="delivery_fee" />
+            <result property="deliveryNote" column="delivery_note" />
+            <result property="goodsWeight" column="goods_weight" />
+            <result property="createTime" column="create_time" />
+            <result property="updateTime" column="update_time" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,order_no,driver_id,customer_phone,delivery_address,delivery_status,
+        delivery_fee,delivery_note,goods_weight,create_time,update_time
+    </sql>
+    <select id="getOrderListByStuts" resultType="com.wanbang.driver.dto.DeliveryOrderDTO">
+        select id , order_no , delivery_address,delivery_status, delivery_fee,goods_weight,create_time
+        from delivery_order
+        where 1=1
+        <if test="orderStatus != null">
+            and delivery_status = #{orderStatus}
+        </if>
+    </select>
+</mapper>

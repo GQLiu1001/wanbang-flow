@@ -1,0 +1,15 @@
+package com.wanbang.manager.config;
+
+import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
+
+@Data
+@Configuration // 或者 @Component
+@ConfigurationProperties(prefix = "spring.datasource.primary")
+public class PrimaryDataSourceProperties {
+    private String url;
+    private String username;
+    private String password;
+    private String driverClassName;
+}

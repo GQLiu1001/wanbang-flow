@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wanbang.manager.mapper.db2.DriverInfoMapper">
+
+    <resultMap id="BaseResultMap" type="com.wanbang.manager.common.DriverInfo">
+            <id property="id" column="id" />
+            <result property="name" column="name" />
+            <result property="phone" column="phone" />
+            <result property="avatar" column="avatar" />
+            <result property="auditStatus" column="audit_status" />
+            <result property="workStatus" column="work_status" />
+            <result property="openid" column="openid" />
+            <result property="money" column="money" />
+            <result property="createTime" column="create_time" />
+            <result property="updateTime" column="update_time" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,name,phone,avatar,audit_status,work_status,
+        openid,money,create_time,update_time
+    </sql>
+    <select id="getDriverList" resultType="com.wanbang.manager.common.DriverInfo">
+        select *
+        from driver_info
+        where 1=1
+        <if test="driverName != null">
+            and name = #{driverName}
+        </if>
+        <if test="driverPhone != null">
+            and phone = #{driverPhone}
+        </if>
+        <if test="auditStatus != null">
+            and audit_status = #{auditStatus}
+        </if>
+        <if test="workStatus != null">
+            and work_status = #{workStatus}
+        </if>
+
+    </select>
+</mapper>

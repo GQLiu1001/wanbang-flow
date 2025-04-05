@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wanbang.console.mapper.InventoryLogMapper">
+
+    <resultMap id="BaseResultMap" type="com.wanbang.console.common.InventoryLog">
+            <id property="id" column="id" />
+            <result property="inventoryItemId" column="inventory_item_id" />
+            <result property="operationType" column="operation_type" />
+            <result property="quantityChange" column="quantity_change" />
+            <result property="operatorId" column="operator_id" />
+            <result property="sourceWarehouse" column="source_warehouse" />
+            <result property="targetWarehouse" column="target_warehouse" />
+            <result property="remark" column="remark" />
+            <result property="createTime" column="create_time" />
+            <result property="updateTime" column="update_time" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,inventory_item_id,operation_type,quantity_change,operator_id,source_warehouse,
+        target_warehouse,remark,create_time,update_time
+    </sql>
+    <select id="getLog" resultType="com.wanbang.console.common.InventoryLog">
+        SELECT *
+        FROM inventory_log
+        WHERE operation_type = #{operationType}
+        <if test="startStr != null and endStr != null">
+            AND update_time BETWEEN #{startStr} AND #{endStr}
+        </if>
+        <if test="startStr != null and endStr == null">
+            AND update_time &gt;= #{startStr}
+        </if>
+        <if test="startStr == null and endStr != null">
+            AND update_time &lt;= #{endStr}
+        </if>
+    </select>
+
+</mapper>

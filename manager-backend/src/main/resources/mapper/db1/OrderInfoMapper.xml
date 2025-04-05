@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wanbang.manager.mapper.db1.OrderInfoMapper">
+
+    <resultMap id="BaseResultMap" type="com.wanbang.manager.common.OrderInfo">
+            <id property="id" column="id" />
+            <result property="orderNo" column="order_no" />
+            <result property="customerPhone" column="customer_phone" />
+            <result property="operatorId" column="operator_id" />
+            <result property="orderRemark" column="order_remark" />
+            <result property="totalAmount" column="total_amount" />
+            <result property="adjustedAmount" column="adjusted_amount" />
+            <result property="aftersaleStatus" column="aftersale_status" />
+            <result property="dispatchStatus" column="dispatch_status" />
+            <result property="orderCreateTime" column="order_create_time" />
+            <result property="orderUpdateTime" column="order_update_time" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,order_no,customer_phone,operator_id,order_remark,total_amount,
+        adjusted_amount,aftersale_status,dispatch_status,order_create_time,order_update_time
+    </sql>
+    <update id="changeDispatchStatusTo0">
+        update order_info
+        set dispatch_status = 0
+        where order_no = #{orderNo}
+    </update>
+    <update id="changeDispatchStatusTo">
+        update order_info
+        set dispatch_status = #{status}
+        where order_no = #{orderNo}
+    </update>
+
+</mapper>

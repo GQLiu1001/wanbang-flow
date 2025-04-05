@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wanbang.console.mapper.OrderInfoMapper">
+
+    <resultMap id="BaseResultMap" type="com.wanbang.console.common.OrderInfo">
+            <id property="id" column="id" />
+            <result property="orderNo" column="order_no" />
+            <result property="customerPhone" column="customer_phone" />
+            <result property="operatorId" column="operator_id" />
+            <result property="orderRemark" column="order_remark" />
+            <result property="totalAmount" column="total_amount" />
+            <result property="adjustedAmount" column="adjusted_amount" />
+            <result property="aftersaleStatus" column="aftersale_status" />
+            <result property="dispatchStatus" column="dispatch_status" />
+            <result property="orderCreateTime" column="order_create_time" />
+            <result property="orderUpdateTime" column="order_update_time" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,order_no,customer_phone,operator_id,order_remark,total_amount,
+        adjusted_amount,aftersale_status,order_create_time,order_update_time
+    </sql>
+
+    <select id="TopSales" resultType="com.wanbang.console.resp.TopSoldItemsResp">
+        select
+            model_number,
+            SUM(adjusted_quantity) as adjusted_quantity
+        from
+            order_item
+        group by model_number
+        order by SUM(adjusted_quantity) DESC
+            limit 5
+    </select>
+    <select id="getTopSalesTrend" resultType="com.wanbang.console.dto.SalesInfoDTO">
+        SELECT
+            SUM(subtotal) AS adjusted_amount,
+            SUM(adjusted_quantity) AS adjusted_quantity
+        FROM
+            order_item
+        WHERE
+            update_time LIKE CONCAT(#{date}, '%')
+    </select>
+    <select id="getTodaySales" resultType="com.wanbang.console.resp.TodaySaleAmountResp">
+        SELECT
+            SUM(info.adjusted_amount) AS today_sale_amount
+        FROM
+            order_info info
+        WHERE
+            info.order_update_time LIKE CONCAT(#{dateStr}, '%')
+    </select>
+    <select id="getTotalSaleAmount" resultType="com.wanbang.console.resp.TotalSaleAmountResp">
+        SELECT
+            SUM(info.adjusted_amount) AS total_sale_amount
+        FROM
+            order_info info
+
+    </select>
+    <select id="getOrderList" resultType="com.wanbang.console.dto.OrderInfoDTO">
+        SELECT
+        info.*,
+        COUNT(item.id) AS itemsCount
+        FROM
+        order_info info
+        LEFT JOIN
+        order_item item ON info.id = item.order_id
+        WHERE 1=1
+        <if test="customerPhone != null">
+            AND info.customer_phone = #{customerPhone}
+        </if>
+        <if test="startStr != null and endStr != null">
+            AND info.order_update_time BETWEEN #{startStr} AND #{endStr}
+        </if>
+        <if test="startStr == null and endStr != null">
+            AND info.order_update_time &lt; #{endStr}
+        </if>
+        <if test="startStr != null and endStr == null">
+            AND info.order_update_time &gt; #{startStr}
+        </if>
+        GROUP BY
+        info.id
+    </select>
+</mapper>
