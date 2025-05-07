@@ -1,0 +1,56 @@
+server:
+  port: 8001
+spring:
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      database: 0
+      password: 123123
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/wanbang_delivery
+    username: root
+    password: 123123
+  application:
+    name: delivery-backend
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    virtual-host: /
+    # Publisher settings
+    publisher-confirm-type: correlated
+    publisher-returns: true
+    # Listener settings
+    listener:
+      simple:
+        acknowledge-mode: manual
+        concurrency: 1
+        max-concurrency: 10
+        prefetch: 1
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+wx:
+  miniapp:
+    appId: wx9cc5a9218e2c173f
+    secret: bc801275ee997d40a04286ca8f60edfe
+tencent:
+  map:
+    key: Z6SBZ-W7QWB-PDWU4-N2C2B-JVFD6-DZB7F
+seata:
+  enabled: true
+  application-id: ${spring.application.name}
+  tx-service-group: default_tx_group  # ??????
+  enable-auto-data-source-proxy: true
+  config:
+    type: file
+  registry:
+    type: file
+  service:
+    vgroup-mapping:
+      default_tx_group: default  # ?default_tx_group????????default???
+    grouplist:
+      default: 127.0.0.1:8091  # Seata?????
