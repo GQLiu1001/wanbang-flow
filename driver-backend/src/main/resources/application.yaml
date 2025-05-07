@@ -35,15 +35,15 @@ mybatis-plus:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 wx:
   miniapp:
-    appId: wx9cc5a9218e2c173f
-    secret: bc801275ee997d40a04286ca8f60edfe
+    appId:
+    secret:
 tencent:
   map:
-    key: Z6SBZ-W7QWB-PDWU4-N2C2B-JVFD6-DZB7F
+    key:
 seata:
   enabled: true
   application-id: ${spring.application.name}
-  tx-service-group: default_tx_group  # ??????
+  tx-service-group: default_tx_group
   enable-auto-data-source-proxy: true
   config:
     type: file
@@ -51,6 +51,6 @@ seata:
     type: file
   service:
     vgroup-mapping:
-      default_tx_group: default  # ?default_tx_group????????default???
+      default_tx_group: default
     grouplist:
-      default: 127.0.0.1:8091  # Seata?????
+      default: 127.0.0.1:8091
